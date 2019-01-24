@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component, PureComponent} from 'react'
 
 
-class Article extends Component{
+class Article extends PureComponent{
 
     constructor(props){
 
@@ -10,55 +10,53 @@ class Article extends Component{
         super(props)
 
         this.state = {
-            isOpen: props.defaultOpen
+            count: 0
         }
 
     }
 
     componentWillMount() {
-        console.log('will mount article' + this.props.article.id)
 
     }
 
     componentDidMount() {
-        console.log('did mount article' + this.props.article.id)
+
     }
 
     // Получены свойства
-    componentWillReceiveProps(nextProps, nextContext) {
-        console.log('will receive props in article')
-        if (nextProps.defaultOpen !== this.props.defaultOpen){
-            this.setState({
-                isOpen: nextProps.defaultOpen
-            })
-        }
-    }
+    // componentWillReceiveProps(nextProps, nextContext) {
+    //
+    //     if (nextProps.isOpen !== this.props.isOpen){
+    //         this.setState({
+    //             isOpen: nextProps.isOpen
+    //         })
+    //     }
+    // }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log('should update article')
-        return true
-    }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     return (this.state.isOpen !== nextState.isOpen)
+    // }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         console.log('will update article')
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('did update article')
+
     }
 
 
     render(){
-        console.log('render article')
-        const {article} = this.props;
-        const body = this.state.isOpen && <section className="card-text">{article.text}</section>;
+
+        const {article, isOpen, onButtonClick} = this.props;
+        const body = isOpen && <section className="card-text">{article.text}</section>;
 
         return (
             <div className="card" style={{width: '50%'}}>
                 <div className="card-header">
-                    <h2>
-                        {article.title}
-                        <button className="btn btn-primary float-right" onClick={this.handleClick}>{this.state.isOpen?'close':'open'}</button>
+                    <h2 onClick={this.counter}>
+                        {article.title} clicked {this.state.count}
+                        <button className="btn btn-primary float-right" onClick={onButtonClick}>{isOpen?'close':'open'}</button>
                     </h2>
                 </div>
                 <div className="card-body">
@@ -69,11 +67,11 @@ class Article extends Component{
         )
     }
 
-    handleClick = () => {
-
+    counter = () => {
         this.setState({
-            isOpen: !this.state.isOpen
+            count: this.state.count + 1
         })
+
     }
 }
 

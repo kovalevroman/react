@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 class App extends Component{
 
     constructor(props){
-        console.log('constructor app')
+
         super(props)
 
         this.state = {
@@ -16,33 +16,31 @@ class App extends Component{
     }
 
     componentWillMount() {
-        console.log('will mount App')
+
     }
 
     componentDidMount() {
-        console.log('did mount App')
+
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log('will receive props App')
+
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log('should update App')
+
         return true
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        console.log('will update App')
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('did update App')
+
     }
 
     render(){
-
-        console.log('render App')
 
         return (
             <div className="container">
@@ -51,19 +49,18 @@ class App extends Component{
                         <button className="btn" onClick={this.revert}>Revert</button>
                     </h1>
                 </div>
-                <ArticleList articles={this.state.reverted ? articles.reverse() : articles} />
+                <ArticleList articles={this.state.reverted ? articles.slice().reverse() : articles} />
             </div>
         )
     }
 
     revert = () => {
-        console.log('before set state')
 
         this.setState({
             reverted: !this.state.reverted
         })
 
-        console.log('after set state')
+
     }
 
 }

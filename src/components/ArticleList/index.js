@@ -1,36 +1,45 @@
-import React, {Component} from 'react'
+import React, {Component, PureComponent} from 'react'
 import Article from "../Article";
 import './style.css'
 
-export default class ArticleList extends Component{
+export default class ArticleList extends PureComponent{
 
     constructor(props){
         super(props)
+
+        this.state = {
+            openArticleId: null
+        }
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log('will receive props in articleList')
+
     }
 
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log('should component update articleList')
-        return true
-    }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //
+    //     return true
+    // }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
-        console.log('will update articleList')
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('did update articleList')
+
     }
 
     render() {
 
-        console.log('render articleList')
+
         const articleElements = this.props.articles.map((article, index) =>
-            <li className="article-list__li" key={article.id}><Article article={article} defaultOpen={index === 0}/></li>
+            <li className="article-list__li" key={article.id}>
+                <Article article={article}
+                         isOpen={this.state.openArticleId === article.id}
+                         onButtonClick = {this.handleClick.bind(this, article.id)}
+                />
+            </li>
         )
 
         return (
@@ -40,4 +49,11 @@ export default class ArticleList extends Component{
         )
 
     }
+
+    handleClick = openArticleId => {
+        this.setState({
+            openArticleId: this.state.openArticleId === openArticleId ? null : openArticleId
+        })
+    }
+
 }
